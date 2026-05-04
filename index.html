@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <title>Boxing Coach Booking App Mobile</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --primary: #111827;
+      --accent: #ef4444;
+      --accent-soft: #fff1f2;
+      --green: #16a34a;
+      --green-soft: #ecfdf5;
+      --blue: #2563eb;
+      --blue-soft: #eff6ff;
+      --amber: #d97706;
+      --amber-soft: #fff7ed;
+      --gray-soft: #f3f4f6;
+      --radius: 18px;
+      --shadow: 0 20px 48px rgba(17,24,39,.08);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+      color: var(--text);
+    }
+
+    .app {
+      max-width: 460px;
+      margin: 0 auto;
+      min-height: 100vh;
+      background: var(--bg);
+      position: relative;
+      box-shadow: var(--shadow);
+    }
+
+    .hidden { display: none !important; }
+
+    .top {
+      padding: 18px 16px 12px;
+      background: rgba(255,255,255,.95);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      background: #111827;
+      color: #fff;
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 10px;
+    }
+
+    h1, h2, h3, h4, p { margin: 0; }
+
+    .title {
+      font-size: 26px;
+      line-height: 1.05;
+      font-weight: 900;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+      margin-top: 6px;
+    }
+
+    .view { min-height: 100vh; }
+
+    .content {
+      padding: 16px 16px 92px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 15px;
+    }
+
+    .card h4 {
+      font-size: 15px;
+      margin-bottom: 12px;
+    }
+
+    .segmented {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      background: #f3f4f6;
+      padding: 6px;
+      border-radius: 16px;
+      margin-top: 16px;
+    }
+
+    .segmented button {
+      border: 0;
+      background: transparent;
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      color: var(--muted);
+    }
+
+    .segmented button.active {
+      background: #fff;
+      color: var(--text);
+    }
+
+    .field { margin-bottom: 12px; }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      color: #374151;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      padding: 13px 14px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    textarea { min-height: 84px; resize: vertical; }
+
+    .btn {
+      width: 100%;
+      border: 0;
+      border-radius: 14px;
+      padding: 13px 14px;
+      font-size: 14px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .btn.primary { background: #111827; color: #fff; }
+    .btn.secondary { background: #fff; color: #111827; border: 1px solid var(--line); }
+    .btn.success { background: var(--green); color: #fff; }
+    .btn.danger { background: #ef4444; color: #fff; }
+
+    .btn-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .stat {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .stat .label {
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: .05em;
+      margin-bottom: 7px;
+    }
+
+    .stat .value {
+      font-size: 24px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px 13px;
+      background: #fff;
+      flex-wrap: wrap;
+    }
+
+    .name {
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .meta {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .pending { background: var(--amber-soft); color: #9a3412; }
+    .approved { background: var(--blue-soft); color: #1d4ed8; }
+    .completed { background: var(--green-soft); color: #15803d; }
+    .blocked { background: var(--gray-soft); color: #374151; }
+    .active-pill { background: var(--accent-soft); color: #be123c; }
+
+    .progress {
+      background: #e5e7eb;
+      border-radius: 999px;
+      overflow: hidden;
+      height: 12px;
+      margin-top: 10px;
+    }
+
+    .progress > span {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, #ef4444, #f97316);
+      border-radius: inherit;
+    }
+
+    .calendar {
+      display: grid;
+      gap: 10px;
+    }
+
+    .day {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px;
+    }
+
+    .day strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 13px;
+    }
+
+    .slot {
+      display: block;
+      margin-top: 8px;
+      padding: 8px 9px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .slot.available { background: #ecfeff; color: #0f766e; }
+    .slot.pending { background: var(--amber-soft); color: #9a3412; }
+    .slot.booked { background: var(--blue-soft); color: #1d4ed8; }
+    .slot.blocked { background: var(--gray-soft); color: #374151; }
+
+    .tabs {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 460px;
+      background: rgba(255,255,255,.96);
+      border-top: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      padding: 10px 10px calc(12px + env(safe-area-inset-bottom));
+      gap: 8px;
+      z-index: 20;
+    }
+
+    .tab {
+      border: 0;
+      background: transparent;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--muted);
+      text-align: center;
+      padding: 8px 4px;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+
+    .tab.active {
+      color: #111827;
+      background: #f3f4f6;
+    }
+
+    .top-actions {
+      display: grid;
+      gap: 10px;
+    }
+
+    .helper {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+      background: #fff;
+      border: 1px dashed #d1d5db;
+      border-radius: 14px;
+      padding: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <section id="loginView" class="view">
+      <div class="top">
+        <div class="eyebrow">Mobile Version</div>
+        <h1 class="title">Boxing Coach App</h1>
+        <p class="subtitle">Mobile-first booking app for coach and clients. Booking requests now require the client to enter their name when reserving.</p>
+      </div>
+      <div class="content">
+        <div class="card">
+          <h4>Enter app</h4>
+          <div class="segmented">
+            <button class="role-btn active" data-role="coach">Coach</button>
+            <button class="role-btn" data-role="client">Client</button>
+          </div>
+
+          <div id="coachLoginBox" style="margin-top:14px;">
+            <div class="field">
+              <label>Coach name</label>
+              <input id="coachName" value="Coach Admin" />
+            </div>
+            <button class="btn primary" id="coachEnterBtn">Enter as coach</button>
+          </div>
+
+          <div id="clientLoginBox" class="hidden" style="margin-top:14px;">
+            <div class="field">
+              <label>Your name</label>
+              <input id="clientNameInput" placeholder="Type your full name" />
+            </div>
+            <button class="btn primary" id="clientEnterBtn">Enter as client</button>
+          </div>
+        </div>
+
+        <div class="helper">
+          <strong>Important:</strong> when a client books a class, they must type their name in the reservation form. If the client does not exist yet, the app creates the client record automatically.
+        </div>
+      </div>
+    </section>
+
+    <section id="coachView" class="view hidden">
+      <div class="top">
+        <div class="eyebrow">Coach</div>
+        <h2 class="title" style="font-size:24px;">Coach dashboard</h2>
+        <p class="subtitle">Manage clients, packages, requests, calendar, and yearly records.</p>
+      </div>
+
+      <div class="content coach-screen" id="coach-home-screen">
+        <div class="stats" id="coachStats"></div>
+        <div class="card">
+          <h4>Pending requests</h4>
+          <div class="list" id="coachPendingList"></div>
+        </div>
+        <div class="card">
+          <h4>Package balances</h4>
+          <div class="list" id="coachPackagesList"></div>
+        </div>
+      </div>
+
+      <div class="content coach-screen hidden" id="coach-calendar-screen">
+        <div class="card">
+          <h4>Weekly calendar</h4>
+          <div class="calendar" id="calendarList"></div>
+        </div>
+        <div class="card">
+          <h4>Add or block slot</h4>
+          <div class="field"><label>Day</label><select id="slotDay"></select></div>
+          <div class="field"><label>Time</label><input id="slotTime" placeholder="5:00 PM" /></div>
+          <div class="field"><label>Type</label><select id="slotType"><option value="available">Available</option><option value="blocked">Blocked</option></select></div>
+          <button class="btn primary" id="addSlotBtn">Save slot</button>
+        </div>
+      </div>
+
+      <div class="content coach-screen hidden" id="coach-clients-screen">
+        <div class="card">
+          <h4>Add client</h4>
+          <div class="field"><label>Full name</label><input id="newClientName" /></div>
+          <div class="field"><label>Phone</label><input id="newClientPhone" /></div>
+          <div class="field"><label>Email</label><input id="newClientEmail" /></div>
+          <button class="btn primary" id="addClientBtn">Create client</button>
+        </div>
+        <div class="card">
+          <h4>Assign 10-class package</h4>
+          <div class="field"><label>Client</label><select id="packageClientSelect"></select></div>
+          <button class="btn primary" id="assignPackageBtn">Assign package</button>
+        </div>
+        <div class="card">
+          <h4>Clients</h4>
+          <div class="list" id="clientsList"></div>
+        </div>
+      </div>
+
+      <div class="content coach-screen hidden" id="coach-reports-screen">
+        <div class="stats" id="reportStats"></div>
+        <div class="card">
+          <h4>Completed sessions</h4>
+          <div class="list" id="completedList"></div>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active coach-tab" data-coach-tab="home">Home</button>
+        <button class="tab coach-tab" data-coach-tab="calendar">Calendar</button>
+        <button class="tab coach-tab" data-coach-tab="clients">Clients</button>
+        <button class="tab coach-tab" data-coach-tab="reports">Reports</button>
+      </div>
+    </section>
+
+    <section id="clientView" class="view hidden">
+      <div class="top">
+        <div class="eyebrow">Client</div>
+        <h2 class="title" style="font-size:24px;" id="clientViewName">Client portal</h2>
+        <p class="subtitle">Request classes, track package usage, and view your sessions.</p>
+      </div>
+
+      <div class="content client-screen" id="client-home-screen">
+        <div class="card">
+          <h4>My package</h4>
+          <div id="clientPackageInfo"></div>
+        </div>
+        <div class="card">
+          <h4>Latest requests</h4>
+          <div class="list" id="clientRequestList"></div>
+        </div>
+      </div>
+
+      <div class="content client-screen hidden" id="client-book-screen">
+        <div class="card">
+          <h4>Reserve a class</h4>
+          <div class="field">
+            <label>Your name</label>
+            <input id="bookingClientName" placeholder="Type your name to reserve" />
+          </div>
+          <div class="field">
+            <label>Select available slot</label>
+            <select id="bookingSlotSelect"></select>
+          </div>
+          <button class="btn primary" id="bookBtn">Send booking request</button>
+        </div>
+        <div class="helper">
+          The client must enter their name before the booking request is submitted. No name, no booking. Tiny guardrail, large payoff.
+        </div>
+      </div>
+
+      <div class="content client-screen hidden" id="client-sessions-screen">
+        <div class="card">
+          <h4>My sessions</h4>
+          <div class="list" id="clientSessionsList"></div>
+        </div>
+      </div>
+
+      <div class="content client-screen hidden" id="client-package-screen">
+        <div class="card">
+          <h4>Package details</h4>
+          <div id="clientPackageDetails"></div>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active client-tab" data-client-tab="home">Home</button>
+        <button class="tab client-tab" data-client-tab="book">Book</button>
+        <button class="tab client-tab" data-client-tab="sessions">Sessions</button>
+        <button class="tab client-tab" data-client-tab="package">Package</button>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'boxingCoachAppMobile_v1';
+    const initialState = {
+      coachName: 'Coach Admin',
+      clients: [],
+      packages: [],
+      slots: [],
+      bookingRequests: [],
+      sessions: []
+    };
+
+    let state = loadState();
+    let currentRole = 'coach';
+    let currentClientId = null;
+
+    function loadState() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return structuredClone(initialState);
+      try {
+        return { ...structuredClone(initialState), ...JSON.parse(raw) };
+      } catch {
+        return structuredClone(initialState);
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function uid(prefix) {
+      return prefix + '_' + Math.random().toString(36).slice(2, 10);
+    }
+
+    function getClientById(id) {
+      return state.clients.find(c => c.id === id);
+    }
+
+    function getClientByName(name) {
+      return state.clients.find(c => c.fullName.toLowerCase() === name.trim().toLowerCase());
+    }
+
+    function getPackage(clientId) {
+      return state.packages.find(p => p.clientId === clientId && p.status === 'active');
+    }
+
+    function seed() {
+      const maria = { id: uid('client'), fullName: 'Maria Lopez', phone: '305-555-0101', email: '', active: true };
+      const daniel = { id: uid('client'), fullName: 'Daniel Cruz', phone: '305-555-0102', email: '', active: true };
+      state.clients = [maria, daniel];
+      state.packages = [
+        { id: uid('pkg'), clientId: maria.id, packageSize: 10, classesUsed: 6, classesRemaining: 4, status: 'active' },
+        { id: uid('pkg'), clientId: daniel.id, packageSize: 10, classesUsed: 2, classesRemaining: 8, status: 'active' }
+      ];
+      state.slots = [
+        { id: uid('slot'), day: 'Monday', time: '5:00 PM', type: 'booked', clientId: maria.id },
+        { id: uid('slot'), day: 'Tuesday', time: '4:00 PM', type: 'available', clientId: null },
+        { id: uid('slot'), day: 'Wednesday', time: '6:00 PM', type: 'blocked', clientId: null },
+        { id: uid('slot'), day: 'Thursday', time: '5:30 PM', type: 'available', clientId: null },
+        { id: uid('slot'), day: 'Saturday', time: '10:00 AM', type: 'available', clientId: null }
+      ];
+      state.bookingRequests = [
+        { id: uid('req'), clientId: daniel.id, clientName: daniel.fullName, day: 'Thursday', time: '5:30 PM', status: 'pending' }
+      ];
+      state.sessions = [
+        { id: uid('sess'), clientId: maria.id, day: 'Apr 28', time: '5:00 PM', status: 'completed', packageDeducted: true },
+        { id: uid('sess'), clientId: daniel.id, day: 'Apr 25', time: '6:00 PM', status: 'completed', packageDeducted: true }
+      ];
+      saveState();
+    }
+
+    function render() {
+      renderCoach();
+      renderClient();
+      renderSharedSelects();
+    }
+
+    function renderSharedSelects() {
+      document.getElementById('slotDay').innerHTML = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+        .map(day => `<option value="${day}">${day}</option>`).join('');
+      document.getElementById('packageClientSelect').innerHTML = state.clients.length
+        ? state.clients.map(c => `<option value="${c.id}">${c.fullName}</option>`).join('')
+        : '<option value="">No clients yet</option>';
+      const available = state.slots.filter(s => s.type === 'available');
+      document.getElementById('bookingSlotSelect').innerHTML = available.length
+        ? available.map(s => `<option value="${s.id}">${s.day} · ${s.time}</option>`).join('')
+        : '<option value="">No available slots</option>';
+    }
+
+    function renderCoach() {
+      document.getElementById('coachStats').innerHTML = [
+        { label: 'Classes this year', value: state.sessions.filter(s => s.status === 'completed').length },
+        { label: 'Active clients', value: state.clients.length },
+        { label: 'Pending requests', value: state.bookingRequests.filter(r => r.status === 'pending').length },
+        { label: 'Available slots', value: state.slots.filter(s => s.type === 'available').length }
+      ].map(s => `<div class="stat"><div class="label">${s.label}</div><div class="value">${s.value}</div></div>`).join('');
+
+      const pending = state.bookingRequests.filter(r => r.status === 'pending');
+      document.getElementById('coachPendingList').innerHTML = pending.length ? pending.map(r => `
+        <div class="row">
+          <div>
+            <div class="name">${r.clientName}</div>
+            <div class="meta">${r.day} · ${r.time}</div>
+          </div>
+          <div class="btn-row">
+            <button class="btn success" onclick="approveRequest('${r.id}')">Approve</button>
+            <button class="btn danger" onclick="rejectRequest('${r.id}')">Reject</button>
+          </div>
+        </div>
+      `).join('') : '<div class="meta">No pending requests.</div>';
+
+      document.getElementById('coachPackagesList').innerHTML = state.clients.map(client => {
+        const pkg = getPackage(client.id);
+        if (!pkg) return '';
+        const pct = Math.round((pkg.classesUsed / pkg.packageSize) * 100);
+        return `
+          <div class="card" style="padding:12px;">
+            <div class="name">${client.fullName}</div>
+            <div class="meta">${pkg.classesUsed} used · ${pkg.classesRemaining} left</div>
+            <div class="progress"><span style="width:${pct}%"></span></div>
+          </div>
+        `;
+      }).join('') || '<div class="meta">No packages yet.</div>';
+
+      const days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+      document.getElementById('calendarList').innerHTML = days.map(day => {
+        const slots = state.slots.filter(s => s.day === day);
+        return `
+          <div class="day">
+            <strong>${day}</strong>
+            ${slots.length ? slots.map(slot => {
+              const label = slot.type === 'booked'
+                ? `${slot.time} · ${getClientById(slot.clientId)?.fullName || ''}`
+                : slot.type === 'pending'
+                ? `${slot.time} · pending`
+                : slot.time;
+              return `<span class="slot ${slot.type}">${label}</span>`;
+            }).join('') : '<span class="slot blocked">No slots</span>'}
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('clientsList').innerHTML = state.clients.length ? state.clients.map(client => {
+        const pkg = getPackage(client.id);
+        return `
+          <div class="row">
+            <div>
+              <div class="name">${client.fullName}</div>
+              <div class="meta">${pkg ? pkg.classesRemaining + ' classes left' : 'No package yet'}</div>
+            </div>
+            <span class="pill active-pill">Client</span>
+          </div>
+        `;
+      }).join('') : '<div class="meta">No clients yet.</div>';
+
+      document.getElementById('reportStats').innerHTML = [
+        { label: 'Completed', value: state.sessions.filter(s => s.status === 'completed').length },
+        { label: 'Approved', value: state.sessions.filter(s => s.status === 'approved').length },
+        { label: 'Pending', value: state.bookingRequests.filter(r => r.status === 'pending').length },
+        { label: 'Clients', value: state.clients.length }
+      ].map(s => `<div class="stat"><div class="label">${s.label}</div><div class="value">${s.value}</div></div>`).join('');
+
+      document.getElementById('completedList').innerHTML = state.sessions.length ? state.sessions.map(session => `
+        <div class="row">
+          <div>
+            <div class="name">${getClientById(session.clientId)?.fullName || 'Client'}</div>
+            <div class="meta">${session.day} · ${session.time}</div>
+          </div>
+          ${session.status === 'approved'
+            ? `<button class="btn success" onclick="completeSession('${session.id}')">Complete</button>`
+            : `<span class="pill completed">${session.status}</span>`}
+        </div>
+      `).join('') : '<div class="meta">No sessions yet.</div>';
+    }
+
+    function renderClient() {
+      if (!currentClientId) return;
+      const client = getClientById(currentClientId);
+      if (!client) return;
+      document.getElementById('clientViewName').textContent = client.fullName;
+      document.getElementById('bookingClientName').value = client.fullName;
+      const pkg = getPackage(client.id);
+
+      document.getElementById('clientPackageInfo').innerHTML = pkg ? `
+        <div class="name">10-class package</div>
+        <div class="meta">Used ${pkg.classesUsed} · Remaining ${pkg.classesRemaining}</div>
+        <div class="progress"><span style="width:${Math.round((pkg.classesUsed / pkg.packageSize) * 100)}%"></span></div>
+      ` : '<div class="meta">No package assigned yet.</div>';
+
+      const requests = state.bookingRequests.filter(r => r.clientId === client.id);
+      document.getElementById('clientRequestList').innerHTML = requests.length ? requests.map(r => `
+        <div class="row">
+          <div>
+            <div class="name">${r.day} · ${r.time}</div>
+            <div class="meta">Booking request</div>
+          </div>
+          <span class="pill ${r.status}">${r.status}</span>
+        </div>
+      `).join('') : '<div class="meta">No requests yet.</div>';
+
+      const sessions = state.sessions.filter(s => s.clientId === client.id);
+      document.getElementById('clientSessionsList').innerHTML = sessions.length ? sessions.map(s => `
+        <div class="row">
+          <div>
+            <div class="name">${s.day} · ${s.time}</div>
+            <div class="meta">Session</div>
+          </div>
+          <span class="pill ${s.status === 'completed' ? 'completed' : 'approved'}">${s.status}</span>
+        </div>
+      `).join('') : '<div class="meta">No sessions yet.</div>';
+
+      document.getElementById('clientPackageDetails').innerHTML = pkg ? `
+        <div class="stats">
+          <div class="stat"><div class="label">Package size</div><div class="value">${pkg.packageSize}</div></div>
+          <div class="stat"><div class="label">Used</div><div class="value">${pkg.classesUsed}</div></div>
+          <div class="stat"><div class="label">Remaining</div><div class="value">${pkg.classesRemaining}</div></div>
+          <div class="stat"><div class="label">Status</div><div class="value" style="font-size:18px">Active</div></div>
+        </div>
+      ` : '<div class="meta">No active package.</div>';
+    }
+
+    function showView(id) {
+      ['loginView','coachView','clientView'].forEach(viewId => document.getElementById(viewId).classList.add('hidden'));
+      document.getElementById(id).classList.remove('hidden');
+    }
+
+    document.querySelectorAll('.role-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentRole = btn.dataset.role;
+        document.getElementById('coachLoginBox').classList.toggle('hidden', currentRole !== 'coach');
+        document.getElementById('clientLoginBox').classList.toggle('hidden', currentRole !== 'client');
+      });
+    });
+
+    document.getElementById('coachEnterBtn').addEventListener('click', () => {
+      state.coachName = document.getElementById('coachName').value.trim() || 'Coach Admin';
+      saveState();
+      render();
+      showView('coachView');
+    });
+
+    document.getElementById('clientEnterBtn').addEventListener('click', () => {
+      const name = document.getElementById('clientNameInput').value.trim();
+      if (!name) return;
+      let client = getClientByName(name);
+      if (!client) {
+        client = { id: uid('client'), fullName: name, phone: '', email: '', active: true };
+        state.clients.push(client);
+        saveState();
+      }
+      currentClientId = client.id;
+      render();
+      showView('clientView');
+    });
+
+    document.querySelectorAll('.coach-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.coach-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        document.querySelectorAll('.coach-screen').forEach(s => s.classList.add('hidden'));
+        document.getElementById('coach-' + tab.dataset.coachTab + '-screen').classList.remove('hidden');
+      });
+    });
+
+    document.querySelectorAll('.client-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.client-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        document.querySelectorAll('.client-screen').forEach(s => s.classList.add('hidden'));
+        document.getElementById('client-' + tab.dataset.clientTab + '-screen').classList.remove('hidden');
+      });
+    });
+
+    document.getElementById('addSlotBtn').addEventListener('click', () => {
+      const day = document.getElementById('slotDay').value;
+      const time = document.getElementById('slotTime').value.trim();
+      const type = document.getElementById('slotType').value;
+      if (!day || !time) return;
+      state.slots.push({ id: uid('slot'), day, time, type, clientId: null });
+      saveState();
+      render();
+      document.getElementById('slotTime').value = '';
+    });
+
+    document.getElementById('addClientBtn').addEventListener('click', () => {
+      const fullName = document.getElementById('newClientName').value.trim();
+      if (!fullName) return;
+      state.clients.push({
+        id: uid('client'),
+        fullName,
+        phone: document.getElementById('newClientPhone').value.trim(),
+        email: document.getElementById('newClientEmail').value.trim(),
+        active: true
+      });
+      saveState();
+      render();
+      document.getElementById('newClientName').value = '';
+      document.getElementById('newClientPhone').value = '';
+      document.getElementById('newClientEmail').value = '';
+    });
+
+    document.getElementById('assignPackageBtn').addEventListener('click', () => {
+      const clientId = document.getElementById('packageClientSelect').value;
+      if (!clientId) return;
+      const existing = getPackage(clientId);
+      if (existing) existing.status = 'archived';
+      state.packages.push({
+        id: uid('pkg'),
+        clientId,
+        packageSize: 10,
+        classesUsed: 0,
+        classesRemaining: 10,
+        status: 'active'
+      });
+      saveState();
+      render();
+    });
+
+    document.getElementById('bookBtn').addEventListener('click', () => {
+      const enteredName = document.getElementById('bookingClientName').value.trim();
+      const slotId = document.getElementById('bookingSlotSelect').value;
+      if (!enteredName || !slotId) return;
+
+      let client = getClientByName(enteredName);
+      if (!client) {
+        client = { id: uid('client'), fullName: enteredName, phone: '', email: '', active: true };
+        state.clients.push(client);
+      }
+      currentClientId = client.id;
+
+      const slot = state.slots.find(s => s.id === slotId);
+      if (!slot) return;
+
+      state.bookingRequests.push({
+        id: uid('req'),
+        clientId: client.id,
+        clientName: enteredName,
+        day: slot.day,
+        time: slot.time,
+        status: 'pending'
+      });
+
+      slot.type = 'pending';
+      slot.clientId = client.id;
+
+      saveState();
+      render();
+    });
+
+    window.approveRequest = function(id) {
+      const req = state.bookingRequests.find(r => r.id === id);
+      if (!req) return;
+      req.status = 'approved';
+      state.sessions.push({
+        id: uid('sess'),
+        clientId: req.clientId,
+        day: req.day,
+        time: req.time,
+        status: 'approved',
+        packageDeducted: false
+      });
+      const slot = state.slots.find(s => s.day === req.day && s.time === req.time && s.clientId === req.clientId);
+      if (slot) slot.type = 'booked';
+      saveState();
+      render();
+    }
+
+    window.rejectRequest = function(id) {
+      const req = state.bookingRequests.find(r => r.id === id);
+      if (!req) return;
+      req.status = 'rejected';
+      const slot = state.slots.find(s => s.day === req.day && s.time === req.time && s.clientId === req.clientId);
+      if (slot) {
+        slot.type = 'available';
+        slot.clientId = null;
+      }
+      saveState();
+      render();
+    }
+
+    window.completeSession = function(id) {
+      const session = state.sessions.find(s => s.id === id);
+      if (!session || session.status === 'completed') return;
+      session.status = 'completed';
+      if (!session.packageDeducted) {
+        const pkg = getPackage(session.clientId);
+        if (pkg && pkg.classesRemaining > 0) {
+          pkg.classesUsed += 1;
+          pkg.classesRemaining -= 1;
+          session.packageDeducted = true;
+        }
+      }
+      saveState();
+      render();
+    }
+
+    if (!state.clients.length) seed();
+    render();
+  </script>
+</body>
+</html>
